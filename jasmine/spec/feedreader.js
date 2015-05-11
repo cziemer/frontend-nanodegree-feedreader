@@ -48,12 +48,15 @@ $(function() {
     * feeds definitions, the allFeeds variable in our application.
     */
     describe('The Menu', function() {
-
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
+        var body = $('body');
+        
+        /* Step 10
+         * Test that ensures the menu element is hidden by default
+         * Menu element is defined by the class "menu-hidden" for the body element
          */
+         it('is hidden by default', function() {
+               expect(body.hasClass('menu-hidden')).toBeTruthy();
+         });
 
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test

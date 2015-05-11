@@ -6,3 +6,4 @@ In this project you are given a web-based application that reads RSS feeds. The 
 ## Resources Consulted
  * [Jasmine 2.2 documentation](http://jasmine.github.io/2.2/introduction.html)
  * [Testing JavaScript Using the Jasmine Framework] (http://www.htmlgoodies.com/beyond/javascript/testing-javascript-using-the-jasmine-framework.html) for a great high level of Jasmine
+ * [This blog] (http://tom-jaeschke.blogspot.com/2012/02/test-to-see-if-class-exists-in-jasmine.html) to check class of an element
