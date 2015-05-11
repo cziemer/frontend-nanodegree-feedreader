@@ -64,10 +64,12 @@ $(function() {
           
           describe('the Menu Icon is clicked', function() {
               
-              // Click the menu icon before each test
+              //Click the menu icon before each test
               beforeEach(function() {
-                  $('.menu-icon-link').trigger('click');
+                  $('.menu-icon-link').click();
               });
+              
+              //Step 12: next two tests
               
               //Test that the menu element is appearing after the first click
               it('1st time and it is visible to the user', function() {
@@ -78,9 +80,7 @@ $(function() {
               it('2nd time and the menu is invisible to the user', function() {
                 expect(body.hasClass('menu-hidden')).toBeTruthy();
               });
-              
           });
-          
       });
 
     /* This test suite will test the initial entries on out page
@@ -88,16 +88,20 @@ $(function() {
      
         describe('Initial Entries', function() {
             
+            //Need to call loadFeed() for the initial entries
+            beforeEach(function(done) {
+                loadFeed(0, done);
+            });
+            
+            //Step 14: Test to ensure there is at least a single .entry element within the feed container
+            it ('at least 1 feed loaded', function(done) {
+                console.log("Feeds loaded: " + $('.feed').children().length);
+                expect($('.feed').children().length).toBeGreaterThan(0);
+                done();
+            });
             
             
         });
-
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test wil require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
 
     /* TODO: Write a new test suite named "New Feed Selection"
 
