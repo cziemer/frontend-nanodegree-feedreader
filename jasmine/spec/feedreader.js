@@ -27,15 +27,23 @@ $(function() {
         });
 
 
-        /* Steps 8 & 9
-         * Test that loops through each feed
-         * in the allFeeds object and ensures it has a URL and Name defined
-         * and that the URL and Name are not empty.
+        /* Test that loops through each feed
+         * in the allFeeds object and ensures it has a URL
+         * and that the URL is not empty.
          */
-        it('each have a URL defined', function() {
-            for (var i in allFeeds) {
+        it('each have a URL defined and not blank', function() {
+            for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].url).toBeDefined();
                 expect(allFeeds[i].url).toBeTruthy();
+            }
+        });
+        
+        /* Test that loops through each feed
+         * in the allFeeds object and ensures it has a Name defined
+         * and that the Name is not empty.
+         */
+        it('each have a Name defined and not blank', function() {
+            for (var i in allFeeds) {
                 expect(allFeeds[i].name).toBeDefined();
                 expect(allFeeds[i].name).toBeTruthy();
             }
@@ -43,50 +51,43 @@ $(function() {
     });
 
 
-    /* Steps 10 - 12
-     * This test suite will check the Menu functionality/Visibility
-     */
-     
+    /* This test suite will check the Menu functionality and Visibility */
+
     describe('The Menu', function() {
         var body = $('body');
         
-        /* Step 10
-         * Test that ensures the menu element is hidden by default
+        /* Test that ensures the menu element is hidden by default
          * Menu element is defined by the class "menu-hidden" for the body element
          */
          it('is hidden by default', function() {
                expect(body.hasClass('menu-hidden')).toBeTruthy();
          });
 
-         /* Step 11
-          * Nested Describe Block - Test the ensures clicking the menu icon properly toggles
+         /* Nested Describe Block - Test the ensures clicking the menu icon properly toggles
           * the menu element. First test ensures it is shown, 
           * Second click ensures menu is hidden again
           */
           
-          describe('the Menu Icon is clicked', function() {
+          describe('the Menu Icon', function() {
               
               //Click the menu icon before each test
               beforeEach(function() {
                   $('.menu-icon-link').click();
               });
               
-              //Step 12: next two tests
-              
               //Test that the menu element is appearing after the first click
-              it('1st time and it is visible to the user', function() {
-                expect(body.hasClass('menu-hidden')).toBeFalsy();
+              it('toggles visibility when the icon is clicked', function() {
+                expect(body.hasClass('menu-hidden')).toBe(false);
               });
               
               //Test that the menu element is hidden after the second click
-              it('2nd time and the menu is invisible to the user', function() {
-                expect(body.hasClass('menu-hidden')).toBeTruthy();
+              it('toggles visibility when the icon is clicked', function() {
+                expect(body.hasClass('menu-hidden')).toBe(true);
               });
           });
       });
 
-    /* Steps 13 - 14
-     * This test suite will test the initial entries on out page
+    /* This test suite will test the initial entries on our page
      * loadFeed() is asynchronous
      */
      
@@ -97,35 +98,29 @@ $(function() {
                 loadFeed(0, done);
             });
             
-            //Step 14: Test to ensure there is at least a single .entry element within the feed container
-            it ('at least 1 feed loaded', function(done) {
-                console.log("Feeds loaded: " + $('.feed').children().length);
+            //Test to ensure there is at least a single .entry element within the feed container
+            it ('at least 1 feed loaded', function() {
                 expect($('.feed').children().length).toBeGreaterThan(0);
-                done();
             });
         });
 
-    /* Steps 15 - 16
-     * This test suite will ensure a new feed is loaded by the loadFeed() function
+    /* This test suite will ensure a new feed is loaded by the loadFeed() function
      * Note: loadFeed() is asynchronous
      */
 
         describe('New Feed Selection', function() {
-            //Variable to store the text of the feed
-            var feedText;
-            
-            beforeEach(function(done) {
-                //Save the title of the initial feed, look for the h2 element
-                feedText = $('.feed').find('h2').text();
-                //Load the next feed
-                loadFeed(1, done);
-            });
-            
-            //Step 16: Test to ensure a new feed is loaded by the loadFeed() function
+            //Test to ensure a new feed is loaded by the loadFeed() function
             it('has been loaded', function(done) {
-                //Compare the original title to the new title
-                expect($('.feed').find('h2').text()).not.toBe(feedText);
-                done();
+                //Load the second feed and get the HTML
+                loadFeed(1, function(){
+                    var feedContents = $('.feed').html();
+                    //Load the first feed to compare to the second feed
+                    loadFeed(0, function(){
+                        //Compare the original title to the new title
+                        expect($('.feed').html()).not.toBe(feedContents);
+                        done();
+                    });
+                });
             });
         });
 }());
