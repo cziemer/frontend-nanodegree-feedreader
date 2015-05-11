@@ -43,8 +43,10 @@ $(function() {
     });
 
 
-    /* This test suite will check the Menu functionality/Visibility
-    */
+    /* Steps 10 - 12
+     * This test suite will check the Menu functionality/Visibility
+     */
+     
     describe('The Menu', function() {
         var body = $('body');
         
@@ -83,7 +85,9 @@ $(function() {
           });
       });
 
-    /* This test suite will test the initial entries on out page
+    /* Steps 13 - 14
+     * This test suite will test the initial entries on out page
+     * loadFeed() is asynchronous
      */
      
         describe('Initial Entries', function() {
@@ -99,14 +103,29 @@ $(function() {
                 expect($('.feed').children().length).toBeGreaterThan(0);
                 done();
             });
-            
-            
         });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+    /* Steps 15 - 16
+     * This test suite will ensure a new feed is loaded by the loadFeed() function
+     * Note: loadFeed() is asynchronous
+     */
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+        describe('New Feed Selection', function() {
+            //Variable to store the text of the feed
+            var feedText;
+            
+            beforeEach(function(done) {
+                //Save the title of the initial feed, look for the h2 element
+                feedText = $('.feed').find('h2').text();
+                //Load the next feed
+                loadFeed(1, done);
+            });
+            
+            //Step 16: Test to ensure a new feed is loaded by the loadFeed() function
+            it('has been loaded', function(done) {
+                //Compare the original title to the new title
+                expect($('.feed').find('h2').text()).not.toBe(feedText);
+                done();
+            });
+        });
 }());
