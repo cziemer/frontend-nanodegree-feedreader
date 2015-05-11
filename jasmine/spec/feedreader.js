@@ -34,7 +34,8 @@ $(function() {
         it('each have a URL defined and not blank', function() {
             for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].url).toBeDefined();
-                expect(allFeeds[i].url).toBeTruthy();
+                //use toBeTruthy beacuse that will ensure the field is not blank
+                expect(allFeeds[i].url).toBeTruthy;
             }
         });
         
@@ -43,8 +44,9 @@ $(function() {
          * and that the Name is not empty.
          */
         it('each have a Name defined and not blank', function() {
-            for (var i in allFeeds) {
+            for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].name).toBeDefined();
+                //use toBeTruthy beacuse that will ensure the field is not blank
                 expect(allFeeds[i].name).toBeTruthy();
             }
         });
@@ -81,7 +83,7 @@ $(function() {
               });
               
               //Test that the menu element is hidden after the second click
-              it('toggles visibility when the icon is clicked', function() {
+              it('toggles visibility when the icon is clicked again', function() {
                 expect(body.hasClass('menu-hidden')).toBe(true);
               });
           });
@@ -107,20 +109,26 @@ $(function() {
     /* This test suite will ensure a new feed is loaded by the loadFeed() function
      * Note: loadFeed() is asynchronous
      */
-
+     
         describe('New Feed Selection', function() {
+            var feedContents = "";
+            
+            beforeEach(function() {
+                //Cleat the entire feed each time
+                $('.feed').empty();
+            });
+            
             //Test to ensure a new feed is loaded by the loadFeed() function
             it('has been loaded', function(done) {
-                //Load the second feed and get the HTML
-                loadFeed(1, function(){
-                    var feedContents = $('.feed').html();
-                    //Load the first feed to compare to the second feed
-                    loadFeed(0, function(){
-                        //Compare the original title to the new title
+                //Load all feeda and check the HTML
+                for (var i = 0; i < allFeeds.length; i++) {
+                    loadFeed(i, function(){
+                        //Compare the original HTML to the new HTML
                         expect($('.feed').html()).not.toBe(feedContents);
+                        feedContents = $('.feed').html();
                         done();
                     });
-                });
+                }
             });
         });
 }());
