@@ -21,7 +21,7 @@ $(function() {
          * allFeeds in app.js to be an empty array and refresh the
          * page?
          */
-        it('are defined', function() {
+        it('each are defined', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
@@ -32,7 +32,7 @@ $(function() {
          * in the allFeeds object and ensures it has a URL and Name defined
          * and that the URL and Name are not empty.
          */
-        it('has a URL defined', function() {
+        it('each have a URL defined', function() {
             for (var i in allFeeds) {
                 expect(allFeeds[i].url).toBeDefined();
                 expect(allFeeds[i].url).toBeTruthy();
@@ -58,11 +58,31 @@ $(function() {
                expect(body.hasClass('menu-hidden')).toBeTruthy();
          });
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
+         /* Step 11
+          * Nested Describe Block - Test the ensures clicking the menu icon properly toggles
+          * the menu element. First test ensures it is shown, 
+          * Second click ensures menu is hidden again
           */
+          
+          describe('the Menu Icon is clicked', function() {
+              
+              // Click the menu icon before each test
+              beforeEach(function() {
+                  $('.menu-icon-link').trigger('click');
+              });
+              
+              //Test that the menu element is appearing after the first click
+              it('1st time and it is visible to the user', function() {
+                expect(body.hasClass('menu-hidden')).toBeFalsy();
+              });
+              
+              //Test that the menu element is hidden after the second click
+              it('2nd time and the menu is invisible to the user', function() {
+                expect(body.hasClass('menu-hidden')).toBeTruthy();
+              });
+              
+          });
+          
       });
 
     /* TODO: Write a new test suite named "Initial Entries" */
