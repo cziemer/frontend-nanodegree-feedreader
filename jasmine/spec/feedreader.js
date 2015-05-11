@@ -43,9 +43,7 @@ $(function() {
     });
 
 
-    /* This is our first test suite - a test suite just contains
-    * a related set of tests. This suite is all about the RSS
-    * feeds definitions, the allFeeds variable in our application.
+    /* This test suite will check the Menu functionality/Visibility
     */
     describe('The Menu', function() {
         var body = $('body');
@@ -85,7 +83,14 @@ $(function() {
           
       });
 
-    /* TODO: Write a new test suite named "Initial Entries" */
+    /* This test suite will test the initial entries on out page
+     */
+     
+        describe('Initial Entries', function() {
+            
+            
+            
+        });
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
